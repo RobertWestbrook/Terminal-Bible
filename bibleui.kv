@@ -1,0 +1,57 @@
+GridLayout:
+    cols: 1
+    size: root.width, root.height
+    Label:
+        font_name: "whitrabt"
+        text: app.address
+        size_hint_y: None
+        height: "40dp"
+        font_size: "20sp"
+
+    ScrollView
+        canvas.before:
+            Color:
+                rgba: .4,.3,.3,.4
+            Rectangle:
+                pos:self.pos
+                size: self.size
+        Label:
+            color: 0,1,.3,.8  
+            font_name: "whitrabt"
+            size_hint_y: None
+            line_height: 1.5
+            padding: 20,20
+            text_size: self.width, None
+            height: self.texture_size[1]
+            valign: 'top'
+            id: mytext
+            text: app.read
+    GridLayout:
+        cols: 3
+        size_hint_y: .05
+        Label:
+            bold: True
+            font_name: "whitrabt"
+            
+            text: "What Book:"
+        Label:
+            font_name: "whitrabt"
+            bold: True
+            text: "What Chapter:"
+        Label:
+            size_hint_x: .3
+    GridLayout:
+        cols: 3
+        size_hint_y: .05
+        TextInput:
+            font_name: "whitrabt"
+            
+        TextInput:
+            font_name: "whitrabt"
+    
+        Button:
+            font_name: "whitrabt"
+            text: "Submit"
+            size_hint_x : .3
+    
+    

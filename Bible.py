@@ -1,3 +1,7 @@
+import kivy
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.properties import StringProperty
 import xml.etree.ElementTree as ET
 bible = ET.parse("NIV.xml").getroot()
 
@@ -18,24 +22,33 @@ def chapterSearch(name, chapter):
     chaptersToChooseFrom = dict(zip(chapterList, chapterElements))
     chapterOfChoice = chaptersToChooseFrom[chapterChoice]
     verseElement = [v for v in chapterOfChoice.findall('v')]
-    print ("\n-~|" + bookOfChoice.get('n') + " " + chapterOfChoice.get('n') + "|~-\n")
+    print ("-~|" + bookOfChoice.get('n') + " " + chapterOfChoice.get('n') + "|~-")
+    textList = []
     for v in verseElement:
         text = v.get('n') + "| " + v.text
-        print (text)
+        textList.append(text)
+    return '\n'.join(textList)
 
 
 # ___________________USER INPUT____________________#
 # Asks for user input to search a particular chapter of the bible
-name = str(input("What Book >> ")) 
-chapter = str(input("What chapter >> "))
+# name = str(input("What Book >> ")) 
+# chapter = str(input("What chapter >> "))
 
 #  Testing Purpose!!!
 # name = "John"
 # chapter = "14"
 
+# ___________________GUI____________________#
+
+class BibleUI(App):
+    address =StringProperty("\n-~|" + "name" + " " + "chapter" + "|~-\n")
+    read = StringProperty(chapterSearch("John", "14"))
 
 #__________________EXECUTION:_________________#
-chapterSearch(name, chapter)
+# print (chapterSearch(name, chapter))
+if __name__ == '__main__':
+    BibleUI().run()
 
 # ___________________TO DO:_______________________#
 # - Create function that checks to see if user input is accurate.

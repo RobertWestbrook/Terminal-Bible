@@ -1,8 +1,13 @@
 import kivy
 from kivy.app import App
 from kivy.uix.label import Label
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty, NumericProperty
+from kivy.uix.widget import Widget
+from kivy.uix.button import Button
+from kivy.uix.dropdown import DropDown
+from kivy.base import runTouchApp
 import xml.etree.ElementTree as ET
+
 bible = ET.parse("NIV.xml").getroot()
 
 # Creates the dictionary with <Book>:<Books Parsed Element>#
@@ -12,6 +17,7 @@ book = dict(zip(title, titleElement))
 
 
 # ___________________BIBLE SEARCH:_______________________#
+
 def chapterSearch(name, chapter):
     '''Allows you to see whole text of a single chapter of the bible.'''
     nameChoice = str(name)
@@ -22,18 +28,19 @@ def chapterSearch(name, chapter):
     chaptersToChooseFrom = dict(zip(chapterList, chapterElements))
     chapterOfChoice = chaptersToChooseFrom[chapterChoice]
     verseElement = [v for v in chapterOfChoice.findall('v')]
-    print ("-~|" + bookOfChoice.get('n') + " " + chapterOfChoice.get('n') + "|~-")
+    # print ("-~|" + bookOfChoice.get('n') + " " + chapterOfChoice.get('n') + "|~-")
     textList = []
     for v in verseElement:
-        text = v.get('n') + "| " + v.text
+        text = v.get('n') + "> " + v.text
         textList.append(text)
     return '\n'.join(textList)
 
 
 # ___________________USER INPUT____________________#
 # Asks for user input to search a particular chapter of the bible
-# name = str(input("What Book >> ")) 
-# chapter = str(input("What chapter >> "))
+
+name = str(input("What Book >> ")) 
+chapter = str(input("What chapter >> "))
 
 #  Testing Purpose!!!
 # name = "John"
@@ -41,14 +48,23 @@ def chapterSearch(name, chapter):
 
 # ___________________GUI____________________#
 
-class BibleUI(App):
-    address =StringProperty("\n-~|" + "name" + " " + "chapter" + "|~-\n")
-    read = StringProperty(chapterSearch("John", "14"))
+
+class BibleUI(Widget):
+
+    # name = "Genesis"
+    # chapter = "1"
+    address = StringProperty("--=> " + name + " " + chapter + " <=--")
+    read = StringProperty(chapterSearch(name, chapter))
+
+
+class BibleApp(App):
+    def build(self):
+        return BibleUI()   
 
 #__________________EXECUTION:_________________#
 # print (chapterSearch(name, chapter))
 if __name__ == '__main__':
-    BibleUI().run()
+    BibleApp().run()
 
 # ___________________TO DO:_______________________#
 # - Create function that checks to see if user input is accurate.

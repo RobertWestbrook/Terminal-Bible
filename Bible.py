@@ -1,47 +1,76 @@
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QComboBox
 import xml.etree.ElementTree as ET
-bible = ET.parse("NIV.xml").getroot()
 
-# Creates the dictionary with <Book>:<Books Parsed Element>#
-titleElement = [b for b in bible.findall('b')]
-title=[b.get('n') for b in bible.findall('b')]
-book = dict(zip(title, titleElement))
+class Bible:
+    '''Allows to search the entire bible and utilize elements for personal research.
+    call using: Bible("name_of_Book", chapter#_in_book)
+    .title - gets the title of the book you searched.
+    .chapter - gets chapter searched
+    .chapterNums - gets a list of the chapter numbers in the book.
+    .chapterElem - gets the raw chapter element parsed from XML tree.
+    .chContents - dictionary of {chapter Numbers : chapter Elements}
+    .verseNums - returns list of verses in selected chapter.
+    .verseText - returns all of the text for the chapter as a list.
+    .verseContent - this is a dictionary of {verse# : verse text} 
+                    verses can be called using the keys of this dict.
+    .bookElem - gets a list of element from each book
+    .bookNames - returns a list of all book names in bible.
+    .contents - is dictionary of {book name : book element}
+    .readChapter() - prints a fromatted full text display of selected
+                    book chapter. 
+    .singleVerse(<verse_num>) - returns a single verse.
+    '''
 
-
-# ___________________BIBLE SEARCH:_______________________#
-def chapterSearch(name, chapter):
-    '''Allows you to see whole text of a single chapter of the bible.'''
-    nameChoice = str(name)
-    chapterChoice = str(chapter)
-    bookOfChoice = book[nameChoice]
-    chapterElements = bookOfChoice.findall('c')
-    chapterList = [c.get('n') for c in chapterElements]
-    chaptersToChooseFrom = dict(zip(chapterList, chapterElements))
-    chapterOfChoice = chaptersToChooseFrom[chapterChoice]
-    verseElement = [v for v in chapterOfChoice.findall('v')]
-    print ("\n-~|" + bookOfChoice.get('n') + " " + chapterOfChoice.get('n') + "|~-\n")
-    for v in verseElement:
-        text = v.get('n') + "| " + v.text
-        print (text)
-
-
-# ___________________USER INPUT____________________#
-# Asks for user input to search a particular chapter of the bible
-name = str(input("What Book >> ")) 
-chapter = str(input("What chapter >> "))
-
-#  Testing Purpose!!!
-# name = "John"
-# chapter = "14"
+    # ____inital Parsing from and main dictionary setup_____#
+    bible = ET.parse("NIV.xml").getroot()
+    bookElem = [b for b in bible.findall('b')]
+    bookNames = [t.get('n') for t in bible.findall('b')]
+    contents = dict(zip(bookNames, bookElem)) 
 
 
-#__________________EXECUTION:_________________#
-chapterSearch(name, chapter)
+    # ____traits and methods_____#
+    def __init__(self, title, chapter):
+        '''This is where the address is passed in the args.
+            to be run as Bible("John", 15).'''
+        self.title = title
+        self.chapter = chapter
+        self.chapterNums = [int(c.get('n')) for c in Bible.contents[title]]
+        self.chapterElem = [c for c in Bible.contents[title]]
+        self.chContents = dict(zip(self.chapterNums, self.chapterElem))
+        self.verseNums = [int(v.get('n')) for v in self.chContents[chapter]]
+        self.verseText = [v.text for v in self.chContents[chapter]]
+        self.verseContent = dict(zip(self.verseNums, self.verseText))
+        
 
-# ___________________TO DO:_______________________#
-# - Create function that checks to see if user input is accurate.
-# - Create a feature that allows to do specific word or phrase searches.
-# - Create a way to search specific verse via address book - chapter: verse/
-#   sections of verses.
-#   Create a way to log what user has read and save progress.
-# - Create an Optional GUI that allows 
+    def singleVerse(self, verse):
+        '''returns a single verse'''
+        v = f"{verse}: {self.verseContent[verse]}"
+        return v 
 
+
+    def readChapter(self):
+        '''Basic search that outputs the entire chapter at once.'''
+        print (f"\n--<| {self.title}:{self.chapter} |>--\n")
+        for i in self.verseContent:
+            print (f"{i}) {self.verseContent[i]}")
+
+    
+# def callGui():
+#     '''Just runs GUI to for the app.'''
+#     Form, Window = uic.loadUiType("Terminal Bible.ui")
+#     app = QApplication([])
+#     window = Window()
+#     form = Form()
+#     form.setupUi(window)
+#     window.show()
+#     app.exec_()
+
+#     combo = QComboBox()
+#     combo.addItem("Apple")
+#     combo.addItem("Pear")
+#     combo.addItem("Lemon")
+
+
+# if __name__ == '__main__':
+#     callGui()

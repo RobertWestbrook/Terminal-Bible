@@ -1,9 +1,9 @@
-
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QComboBox
 import xml.etree.ElementTree as ET
 
 class Bible:
-    '''
-    Allows to search the entire bible and utilize elements for personal research.
+    '''Allows to search the entire bible and utilize elements for personal research.
     call using: Bible("name_of_Book", chapter#_in_book)
     .title - gets the title of the book you searched.
     .chapter - gets chapter searched
@@ -52,21 +52,25 @@ class Bible:
     def readChapter(self):
         '''Basic search that outputs the entire chapter at once.'''
         print (f"\n--<| {self.title}:{self.chapter} |>--\n")
-        text = []
         for i in self.verseContent:
-            text.append(f"{i}. {self.verseContent[i]}")
-        wholeText = "\n".join(text)
-        print (wholeText)
-        return wholeText
+            print (f"{i}) {self.verseContent[i]}")
 
     
 # def callGui():
 #     '''Just runs GUI to for the app.'''
-    # Form, Window = uic.loadUiType("Terminal Bible.ui")
-    # app = QApplication([])
-    # window = Window()
-    # form = Form()
-    # form.setupUi(window)
-    # window.show()
-    # app.exec_()
+#     Form, Window = uic.loadUiType("Terminal Bible.ui")
+#     app = QApplication([])
+#     window = Window()
+#     form = Form()
+#     form.setupUi(window)
+#     window.show()
+#     app.exec_()
 
+#     combo = QComboBox()
+#     combo.addItem("Apple")
+#     combo.addItem("Pear")
+#     combo.addItem("Lemon")
+
+
+# if __name__ == '__main__':
+#     callGui()

@@ -1,9 +1,9 @@
-
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QComboBox
 import xml.etree.ElementTree as ET
 
 class Bible:
-    '''
-    Allows to search the entire bible and utilize elements for personal research.
+    '''Allows to search the entire bible and utilize elements for personal research.
     call using: Bible("name_of_Book", chapter#_in_book)
     .title - gets the title of the book you searched.
     .chapter - gets chapter searched

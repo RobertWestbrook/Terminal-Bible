@@ -36,9 +36,11 @@ class Bible:
         self.title = title
         self.chapter = chapter
         self.chapterNums = [int(c.get('n')) for c in Bible.contents[title]]
+        self.chapterTotal = len(self.chapterNums)
         self.chapterElem = [c for c in Bible.contents[title]]
         self.chContents = dict(zip(self.chapterNums, self.chapterElem))
         self.verseNums = [int(v.get('n')) for v in self.chContents[chapter]]
+        self.verseTotal = len(self.verseNums)
         self.verseText = [v.text for v in self.chContents[chapter]]
         self.verseContent = dict(zip(self.verseNums, self.verseText))
         
@@ -51,22 +53,17 @@ class Bible:
 
     def readChapter(self):
         '''Basic search that outputs the entire chapter at once.'''
+        text = []
+        for i in self.verseContent:
+            text.append(f"{i}. {self.verseContent[i]}")
+        wholeText = "\n".join(text)
+        return wholeText
+
+    def printChapter(self):
+        '''Basic search that outputs the entire chapter at once.'''
         print (f"\n--<| {self.title}:{self.chapter} |>--\n")
         text = []
         for i in self.verseContent:
             text.append(f"{i}. {self.verseContent[i]}")
         wholeText = "\n".join(text)
         print (wholeText)
-        return wholeText
-
-    
-# def callGui():
-#     '''Just runs GUI to for the app.'''
-    # Form, Window = uic.loadUiType("Terminal Bible.ui")
-    # app = QApplication([])
-    # window = Window()
-    # form = Form()
-    # form.setupUi(window)
-    # window.show()
-    # app.exec_()
-

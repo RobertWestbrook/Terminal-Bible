@@ -22,14 +22,16 @@ class Ui(QtWidgets.QMainWindow):
         
         # verse combo
         self.comboVerse = self.findChild(QtWidgets.QComboBox, 'comboVerse')
-
+        self.comboVerse.activated.connect(self.single_verse)
         # Display
-        self.display = self.findChild(QtWidgets.QTextEdit, 'display')
-        self.display.setReadOnly(True)
+        self.display = self.findChild(QtWidgets.QTextBrowser, 'display')
+        self.address = self.findChild(QtWidgets.QLabel, 'address')
+        # self.display.setReadOnly(True)
         self.update_display()
+        self.update_address()
         
-    # Functionality
 
+    # Functionality
     def update_chapter(self):
         '''
         When Book or chapter are changed this function will update the 
@@ -52,14 +54,32 @@ class Ui(QtWidgets.QMainWindow):
             self.update_display()
         
 
+    def update_address(self):
+        self.address.clear()
+        self.verseNums = Bible(self.comboBook.currentText(), self.comboChapter.currentIndex()+1).verseTotal
+        self.address.setText(f'-~|| {self.comboBook.currentText()} {self.comboChapter.currentIndex()+1} : 1 - '
+                               f'{self.verseNums} ||~-')
+
     def update_display(self):
         self.display.clear()
         self.display.moveCursor(QtGui.QTextCursor.Start)
         self.text = Bible(self.comboBook.currentText(), self.comboChapter.currentIndex()+1).readChapter()
         self.display.append(self.text)
+        self.update_address()
+
+
+    def single_verse(self):
+        self.display.clear()
+        self.address.clear()
+        self.text = (Bible(self.comboBook.currentText(), self.comboChapter
+                    .currentIndex()+1).singleVerse(self.comboVerse.currentIndex()+1))
+        self.display.append(self.text)
+        self.address.setText(f'-~|| {self.comboBook.currentText()} {self.comboChapter.currentIndex()+1}:'
+                            f'{self.comboVerse.currentIndex()+1} ||~-')
+
 
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication
     window = Ui() # Create an instance of our class
-    app.exec_() # Start the application
+    app.exec_() # Start the applications

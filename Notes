@@ -1,0 +1,34 @@
+
+# def wordCountChapter(self, word_to_search):
+    #     self.chapter = self.readChapter().split()
+    #     self.chapterLower = [i.lower() for i in self.chapter]
+    #     return self.chapterLower.count(word_to_search)
+
+
+    # def wordCountBook(self, word_to_search):
+    #     text = []
+    #     count = 0
+    #     where = []
+    #     for c in self.chapterElem:
+    #         ch = c.findall('v')
+    #         for v in ch:
+    #             verse = v.text.lower()
+    #             text.append(verse)
+    #             if word_to_search in verse:
+    #                 qty = int(verse.split().count(word_to_search))
+    #                 count += qty
+    #                 where.append(f'{c.get("n")}:{v.get("n")}')
+    #     return count
+
+    # def wordSearch(self, word):
+    #     location = []
+    #     count = 0
+    #     for b in self.bookElem:
+    #         b = b.findall("c")
+    #         for c in b:
+    #             c = c.findall("v")
+    #             for v in c: 
+    #                 v = v.text.lower()
+    #                 if word in v:
+    #                     count += 1
+    #         print(count)

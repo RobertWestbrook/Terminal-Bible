@@ -1,5 +1,3 @@
-from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QComboBox
 import xml.etree.ElementTree as ET
 
 class Bible:
@@ -21,29 +19,35 @@ class Bible:
                     book chapter. 
     .singleVerse(<verse_num>) - returns a single verse.
     '''
-
-    # ____inital Parsing from and main dictionary setup_____#
-    bible = ET.parse("NIV.xml").getroot()
-    bookElem = [b for b in bible.findall('b')]
-    bookNames = [t.get('n') for t in bible.findall('b')]
-    contents = dict(zip(bookNames, bookElem)) 
-
+    NIV = "NIV.xml"
+    ESV = "ESV.xml"
+    NKJV= "NKJV.xml"
 
     # ____traits and methods_____#
-    def __init__(self, title, chapter):
+    def __init__(self, version, title, chapter):
         '''This is where the address is passed in the args.
             to be run as Bible("John", 15).'''
+        # ____inital Parsing from and main dictionary setup_____#
+        self.bible = ET.parse(version).getroot()
+        self.bookElem = [b for b in self.bible.findall('b')]
+        self.bookNames = [t.get('n') for t in self.bible.findall('b')]
+        self.contents = dict(zip(self.bookNames, self.bookElem))    
         self.title = title
         self.chapter = chapter
-        self.chapterNums = [int(c.get('n')) for c in Bible.contents[title]]
+        self.chapterNums = [int(c.get('n')) for c in self.contents[title]]
         self.chapterTotal = len(self.chapterNums)
-        self.chapterElem = [c for c in Bible.contents[title]]
+        self.chapterElem = [c for c in self.contents[title]]
         self.chContents = dict(zip(self.chapterNums, self.chapterElem))
         self.verseNums = [int(v.get('n')) for v in self.chContents[chapter]]
         self.verseTotal = len(self.verseNums)
         self.verseText = [v.text for v in self.chContents[chapter]]
         self.verseContent = dict(zip(self.verseNums, self.verseText))
-        
+
+
+    def getVersion(self):
+        # print (self.bible.get('n'))
+        return self.bible.get('n')
+
 
     def singleVerse(self, verse):
         '''returns a single verse'''
@@ -67,3 +71,7 @@ class Bible:
             text.append(f"{i}. {self.verseContent[i]}")
         wholeText = "\n".join(text)
         print (wholeText)
+
+
+# Bible(Bible.ESV, 'John', 4).printChapter()
+# Bible(Bible.NIV, 'John', 4).printChapter()

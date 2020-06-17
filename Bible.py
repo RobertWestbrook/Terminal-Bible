@@ -71,7 +71,3 @@ class Bible:
             text.append(f"{i}. {self.verseContent[i]}")
         wholeText = "\n".join(text)
         print (wholeText)
-
-
-# Bible(Bible.ESV, 'John', 4).printChapter()
-# Bible(Bible.NIV, 'John', 4).printChapter()

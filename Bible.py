@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 
+
 class Bible:
     '''Allows to search the entire bible and utilize elements for personal research.
     call using: Bible("name_of_Book", chapter#_in_book)
@@ -22,6 +23,7 @@ class Bible:
     NIV = "NIV.xml"
     ESV = "ESV.xml"
     NKJV= "NKJV.xml"
+
 
     # ____traits and methods_____#
     def __init__(self, version, title, chapter):
@@ -62,6 +64,7 @@ class Bible:
             text.append(f"{i}. {self.verseContent[i]}")
         wholeText = "\n".join(text)
         return wholeText
+
 
     def printChapter(self):
         '''Basic search that outputs the entire chapter at once.'''

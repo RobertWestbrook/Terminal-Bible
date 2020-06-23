@@ -132,14 +132,20 @@ class Ui(QtWidgets.QMainWindow):
         else:
             self.update_display()
 
-
+    # Navigation buttons need work to navigate through combo box. 
+    # Using .setCurrentIndex not working with current functionality of the code.
+    # See about changing position of the of combo another way.
     def next_item(self):
+        '''On Button click, this changes the the combobox position of the chapter.
+           to "next" chapter
+        '''
         print ("next clicked")
-        # index = self.comboChapter.currentIndex()
-        # self.update_chapter()
-        # self.comboChapter.setCurrentIndex(index + 1)
 
-    def previous_item(self):
+
+    def previous_item(self): # 
+        '''On Button click, this changes the the combobox position of the chapter.
+           to "previous" chapter
+        '''
         print ("Previous Clicked")
 
 

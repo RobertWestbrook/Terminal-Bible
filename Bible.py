@@ -44,7 +44,8 @@ class Bible:
         self.verseTotal = len(self.verseNums)
         self.verseText = [v.text for v in self.chContents[chapter]]
         self.verseContent = dict(zip(self.verseNums, self.verseText))
-
+        # verseElem = [v for v in self.chContents[chapter]]
+        # self.verseElems = dict(zip(self.verseNums, verseElem))
 
     def getVersion(self):
         # print (self.bible.get('n'))
@@ -74,3 +75,15 @@ class Bible:
             text.append(f"{i}. {self.verseContent[i]}")
         wholeText = "\n".join(text)
         print (wholeText)
+
+
+# text = Bible(Bible.NIV, "John", 1).contents
+# full = {}
+# for b in text:
+#     chapter = Bible(Bible.NIV, b, 1).chContents
+#     for c in chapter:
+#         verse = Bible(Bible.NIV, b, c).verseContent
+#         full.update({b:{c:verse}})
+# print (full['Genesis'].keys())
+# # print (full['Genesis'][20])
+# # print (text)

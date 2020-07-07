@@ -33,6 +33,7 @@ class Ui(QtWidgets.QMainWindow):
         print (self.comboChapter.currentIndex())
         # self.comboChapter.currentIndexChanged.connect(self.update_verse)
         self.comboChapter.activated.connect(self.update_verse)
+        self.comboChapter.activated.connect(self.navigation_update)
             # wouldn't work on Index Change???
         
         # verse combo
@@ -46,11 +47,13 @@ class Ui(QtWidgets.QMainWindow):
 
         # Navigation Buttons
         self.next_button = self.findChild(QtWidgets.QPushButton, 'next')
+        # self.next_button.clicked.connect(self.navigation_update)
         self.next_button.clicked.connect(self.next_item)
         self.previous_button = self.findChild(QtWidgets.QPushButton, 'previous')
         self.previous_button.clicked.connect(self.previous_item)
-
-
+        # self.comboChapter.currentIndexChanged.connect(self.navigation_update)
+        self.navigation_update()
+        
     # Functionality
     def update_chapter(self):
         '''
@@ -71,10 +74,11 @@ class Ui(QtWidgets.QMainWindow):
         self.comboVerse.clear()
         verseNums = (Bible(self.version, self.comboBook.currentText(),
                            self.comboChapter.currentIndex()+1).verseTotal)
+        if self.comboChapter.currentIndex()+1 < 1:    
+            self.comboChapter.setCurrentIndex(1)
         for v in range(1, verseNums +1):
             self.comboVerse.addItem(f'{v}')
-        # if self.comboChapter.currentIndex() < 1:    
-        #     self.comboChapter.setCurrentIndex(1)
+
         self.comboVerse.setCurrentIndex(-1)
         self.update_display()
 
@@ -148,6 +152,25 @@ class Ui(QtWidgets.QMainWindow):
         '''
         print ("Previous Clicked")
 
+
+    def navigation_update(self):
+        ''' sets parameters on the buttons to activate and deactivate
+        when index reaches limit'''
+        if self.comboChapter.currentIndex()+1 != int(Bible(self.version, self.comboBook.currentText(), 
+                                                self.comboChapter.currentIndex()+1).chapterTotal):
+            self.next_button.setEnabled(True)
+        else:
+            self.next_button.setEnabled(False)
+        
+        if self.comboChapter.currentIndex() <= 0:
+            self.previous_button.setEnabled(False)
+        else:
+            self.previous_button.setEnabled(True) 
+
+    def search(self):
+        '''Need to create a function in bible app class to search through scripture for certain phrases
+        then connect link a search bar to this.'''
+        pass
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication

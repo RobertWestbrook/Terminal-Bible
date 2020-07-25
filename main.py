@@ -139,6 +139,7 @@ class Ui(QtWidgets.QMainWindow):
     # Navigation buttons need work to navigate through combo box. 
     # Using .setCurrentIndex not working with current functionality of the code.
     # See about changing position of the of combo another way.
+
     def next_item(self):
         '''On Button click, this changes the the combobox position of the chapter.
            to "next" chapter
@@ -176,3 +177,12 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication
     window = Ui() # Create an instance of our class
     app.exec_() # Start the applications
+
+
+
+# Todo: 
+# Create a notes secton that auto saves as a texteditor for each passage that. Each 
+# chapter that open has a notes tab the can be opened to with any notes previously 
+# saved in it!
+# Fix the navigation buttons
+# Finish the search function.

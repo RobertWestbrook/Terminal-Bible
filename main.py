@@ -33,7 +33,7 @@ class Ui(QtWidgets.QMainWindow):
         print (self.comboChapter.currentIndex())
         # self.comboChapter.currentIndexChanged.connect(self.update_verse)
         self.comboChapter.activated.connect(self.update_verse)
-        self.comboChapter.activated.connect(self.navigation_update)
+        # self.comboChapter.activated.connect(self.navigation_update)
             # wouldn't work on Index Change???
         
         # verse combo
@@ -45,14 +45,17 @@ class Ui(QtWidgets.QMainWindow):
         self.display.moveCursor(QtGui.QTextCursor.Start)
         self.address = self.findChild(QtWidgets.QLabel, 'address')
 
-        # Navigation Buttons
+        #-------------This section needs work---------------------#
+        # # Navigation Buttons -- 
         self.next_button = self.findChild(QtWidgets.QPushButton, 'next')
-        # self.next_button.clicked.connect(self.navigation_update)
-        self.next_button.clicked.connect(self.next_item)
+        self.next_button.setEnabled(False)
+        # # self.next_button.clicked.connect(self.navigation_update)
+        # self.next_button.clicked.connect(self.next_item)
         self.previous_button = self.findChild(QtWidgets.QPushButton, 'previous')
-        self.previous_button.clicked.connect(self.previous_item)
-        # self.comboChapter.currentIndexChanged.connect(self.navigation_update)
-        self.navigation_update()
+        self.previous_button.setEnabled(False)
+        # self.previous_button.clicked.connect(self.previous_item)
+        # # self.comboChapter.currentIndexChanged.connect(self.navigation_update)
+        # self.navigation_update()
         
     # Functionality
     def update_chapter(self):
@@ -136,42 +139,47 @@ class Ui(QtWidgets.QMainWindow):
         else:
             self.update_display()
 
-    # Navigation buttons need work to navigate through combo box. 
-    # Using .setCurrentIndex not working with current functionality of the code.
-    # See about changing position of the of combo another way.
 
-    def next_item(self):
-        '''On Button click, this changes the the combobox position of the chapter.
-           to "next" chapter
-        '''
-        print ("next clicked")
+# ----------------This Section needs work!---------------------#
+    # def next_item(self):
+    #     '''On Button click, this changes the the combobox position of the chapter.
+    #        to "next" chapter
+    #     '''
+    #     print ("next clicked")
 
 
-    def previous_item(self): # 
-        '''On Button click, this changes the the combobox position of the chapter.
-           to "previous" chapter
-        '''
-        print ("Previous Clicked")
+    # def previous_item(self): # 
+    #     '''On Button click, this changes the the combobox position of the chapter.
+    #        to "previous" chapter
+    #     '''
+    #     print ("Previous Clicked" + f"{self.comboChapter.currentIndex()}")
+    #     if self.comboChapter.currentIndex() > 0:
+    #         indx = self.comboChapter.currentIndex()-1
+    #     else:
+    #         indx = self.comboChapter.currentIndex()
+    #     self.comboChapter.setCurrentIndex(indx)
 
 
-    def navigation_update(self):
-        ''' sets parameters on the buttons to activate and deactivate
-        when index reaches limit'''
-        if self.comboChapter.currentIndex()+1 != int(Bible(self.version, self.comboBook.currentText(), 
-                                                self.comboChapter.currentIndex()+1).chapterTotal):
-            self.next_button.setEnabled(True)
-        else:
-            self.next_button.setEnabled(False)
+    # def navigation_update(self):
+    #     ''' sets parameters on the buttons to activate and deactivate
+    #     when index reaches limit'''
+    #     if self.comboChapter.currentIndex()+1 != int(Bible(self.version, self.comboBook.currentText(), 
+    #                                             self.comboChapter.currentIndex()+1).chapterTotal):
+    #         self.next_button.setEnabled(True)
+    #     else:
+    #         self.next_button.setEnabled(False)
         
-        if self.comboChapter.currentIndex() <= 0:
-            self.previous_button.setEnabled(False)
-        else:
-            self.previous_button.setEnabled(True) 
+    #     if self.comboChapter.currentIndex() <= 0:
+    #         self.previous_button.setEnabled(False)
+    #     else:
+    #         self.previous_button.setEnabled(True) 
 
-    def search(self):
-        '''Need to create a function in bible app class to search through scripture for certain phrases
-        then connect link a search bar to this.'''
-        pass
+    # def search(self):
+    #     '''Need to create a function in bible app class to search through scripture for certain phrases
+    #     then connect link a search bar to this.'''
+    #     pass
+#------------------------------------------------------------------
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv) # Create an instance of QtWidgets.QApplication

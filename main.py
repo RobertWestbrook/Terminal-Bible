@@ -30,15 +30,9 @@ class Ui(QtWidgets.QMainWindow):
 
         # chapter Combo
         self.comboChapter = self.findChild(QtWidgets.QComboBox, 'comboChapter')
-        print (self.comboChapter.currentIndex())
-        # self.comboChapter.currentIndexChanged.connect(self.update_verse)
-        self.comboChapter.activated.connect(self.update_verse)
+        self.comboChapter.currentIndexChanged.connect(self.update_display)
         # self.comboChapter.activated.connect(self.navigation_update)
-            # wouldn't work on Index Change???
         
-        # verse combo
-        self.comboVerse = self.findChild(QtWidgets.QComboBox, 'comboVerse')
-        self.comboVerse.activated.connect(self.single_verse)
 
         # Display
         self.display = self.findChild(QtWidgets.QTextBrowser, 'display')
@@ -68,22 +62,8 @@ class Ui(QtWidgets.QMainWindow):
         for c in range(1, self.chapterNums +1):
             self.comboChapter.addItem(f'{c}')
         self.comboChapter.setCurrentIndex(0)
-        self.update_verse()
         # self.update_display()
 
-
-    def update_verse(self):
-        '''updates with verse combobox'''
-        self.comboVerse.clear()
-        verseNums = (Bible(self.version, self.comboBook.currentText(),
-                           self.comboChapter.currentIndex()+1).verseTotal)
-        if self.comboChapter.currentIndex()+1 < 1:    
-            self.comboChapter.setCurrentIndex(1)
-        for v in range(1, verseNums +1):
-            self.comboVerse.addItem(f'{v}')
-
-        self.comboVerse.setCurrentIndex(-1)
-        self.update_display()
 
 
     def update_address(self):
@@ -107,19 +87,6 @@ class Ui(QtWidgets.QMainWindow):
         self.display.moveCursor(QtGui.QTextCursor.Start)
 
 
-    def single_verse(self):
-        ''' Updates display when verse is selected to just have one verse displayed. '''
-        self.display.clear()
-        self.address.clear()
-        text = (Bible(self.version, self.comboBook.currentText(), self.comboChapter
-                      .currentIndex()+1).singleVerse(self.comboVerse.currentIndex()+1))
-        self.display.append(text)
-        self.address.setText(f'-~ {self.comboBook.currentText()} '
-                             f'{self.comboChapter.currentIndex()+1}:'
-                             f'{self.comboVerse.currentIndex()+1} '
-                             f'({Bible(self.version, "John", 1).getVersion()}) ~-')
-
-
     def version_update(self):
         '''
         Updates Text based on version selected.
@@ -134,10 +101,7 @@ class Ui(QtWidgets.QMainWindow):
         else:
             self.version = Bible.NIV
 
-        if self.comboVerse.currentIndex() != -1:
-            self.single_verse()
-        else:
-            self.update_display()
+        self.update_display()
 
 
 # ----------------This Section needs work!---------------------#

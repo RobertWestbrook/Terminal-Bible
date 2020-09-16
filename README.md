@@ -9,17 +9,16 @@ Just download the file and directory in terminal:
 When run in terminal make sure that you enter a valid bible book and chapter and the text of the chapter should be displayed. If invalid input you will recieve an error and will need to rerun. 
 
 ### To Run GUI Version:
-`cd` to the `Terminal-Bible` directory and run:
+`cd` to the `Terminal-Bible` directory and run:<br>
 `python main.py`
 
 ### Example:
-In terminal: 
-`cd` to the file directory `Terminal-Bible`.
-Open Python Shell and import the following:
-`from Bible import Bible`
-For searches you can use the following format:
-`Bible(<version>, <book>, <chapter>).readChapter()`
-`Bible(NIV, "John", 15).readChapter()`
+In terminal: `cd` to the file directory `Terminal-Bible`.<br>
+Open Python Shell and import the following:<br>
+`from Bible import Bible`<br><br>
+For searches you can use the following format:<br>
+`Bible(<version>, <book>, <chapter>).readChapter()`<br><br>
+`Bible(NIV, "John", 15).readChapter()`<br>
 
 *Current bible versions available are*
 - **NIV**(New International Version), 

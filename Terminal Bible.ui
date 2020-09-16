@@ -512,24 +512,10 @@
         <enum>QLayout::SetNoConstraint</enum>
        </property>
        <item row="3" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0">
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="1">
          <property name="topMargin">
           <number>5</number>
          </property>
-         <item>
-          <widget class="QPushButton" name="previous">
-           <property name="font">
-            <font>
-             <pointsize>15</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>&lt;- Prev</string>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QLabel" name="address">
            <property name="font">
@@ -572,20 +558,6 @@
            </property>
            <property name="margin">
             <number>0</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="next">
-           <property name="font">
-            <font>
-             <pointsize>15</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string> Next -&gt;</string>
            </property>
           </widget>
          </item>
